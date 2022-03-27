@@ -3,6 +3,7 @@ import 'package:team_apt_task/utils/config/routes.dart';
 
 import '../../utils/config/constants.dart';
 import '../../utils/config/enums.dart';
+import '../../utils/config/size_config.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({Key? key, required this.selectedMenu, this.padding = 10})
@@ -15,16 +16,8 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: padding),
-      decoration: BoxDecoration(
-        color: kWhiteColor,
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(0, -15),
-            blurRadius: 20,
-            color: const Color(0xFFDADADA).withOpacity(0.15),
-          ),
-        ],
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
@@ -32,25 +25,24 @@ class BottomNavBar extends StatelessWidget {
       child: SafeArea(
           top: false,
           child: Container(
+            height: getProportionateScreenHeight(65),
             padding: EdgeInsets.zero,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             decoration: const BoxDecoration(
-              color: kWhiteColor,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: kDarkColor,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(
-                navs.length,
-                (index) {
-                  final nav = navs[index];
-                  return BottomNav(
-                      selectedMenu: selectedMenu,
-                      selected: nav['selected'],
-                      icon: nav['icon'],
-                      goto: nav['goto']);
-                },
-              ),
+                children: navs
+                    .asMap()
+                    .entries
+                    .map((nav) => BottomNav(
+                        selectedMenu: selectedMenu,
+                        selected: nav.value['selected'],
+                        icon: nav.value['icon'],
+                        goto: nav.value['goto']))
+                    .toList()
             ),
           )),
     );
@@ -60,7 +52,7 @@ class BottomNavBar extends StatelessWidget {
 List<Map<String, dynamic>> navs = [
   {
     'selected': MenuState.home,
-    'icon': Icons.home,
+    'icon': Icons.home_outlined,
     'goto': AppRoute.home,
   },
   {
@@ -70,7 +62,7 @@ List<Map<String, dynamic>> navs = [
   },
   {
     'selected': MenuState.cart,
-    'icon': Icons.shopping_cart,
+    'icon': Icons.shopping_cart_outlined,
     'goto': AppRoute.cart
   },
 ];
@@ -96,6 +88,7 @@ class BottomNav extends StatelessWidget {
         icon: Icon(
           icon,
           color: selected == selectedMenu ? kPrimaryColor : kWhiteColor,
+          size: 30,
         ),
         onPressed: () => Navigator.of(context).pushReplacementNamed(goto));
   }

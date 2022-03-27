@@ -20,7 +20,7 @@ class BuildDot extends StatelessWidget {
       height: size,
       width: size,
       decoration: BoxDecoration(
-          color: currentIndex == index ? kPrimaryColor : kGrey2,
+          color: currentIndex == index ? kPrimaryColor : kWhiteColor,
           borderRadius: BorderRadius.circular(5)),
     );
   }

@@ -67,9 +67,9 @@ class _TabsScreenState extends State<TabsScreen>
               text: 'History',
             )
           ],
-          indicatorColor: kLightGreen,
+          indicatorColor: kGreenColor,
           indicatorWeight: 3,
-          labelColor: kLightGreen,
+          labelColor: kGreenColor,
           unselectedLabelColor: kGreyColor,
           labelStyle: TextStyle(
               fontStyle: FontStyle.italic,

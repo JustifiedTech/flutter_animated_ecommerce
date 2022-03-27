@@ -22,7 +22,7 @@ class Themes {
       textTheme: GoogleFonts.montserratTextTheme(),
       inputDecorationTheme: inputDecorationTheme(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      primarySwatch: kPrimarySwatch,
+      // primarySwatch: kPrimarySwatch,
       brightness: Brightness.light,
       scaffoldBackgroundColor: kBackground,
     );
@@ -30,7 +30,7 @@ class Themes {
 
   static InputDecorationTheme inputDecorationTheme() {
     OutlineInputBorder outlineInputBorder = const OutlineInputBorder(
-        borderSide: BorderSide(width: 0.8, color: kGrey2),
+        borderSide: BorderSide(width: 0.8, color: kGreyColor),
         borderRadius: BorderRadius.all(Radius.circular(8)),
         gapPadding: 5);
     OutlineInputBorder errorInputBorder = const OutlineInputBorder(
