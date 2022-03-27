@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_apt_task/utils/config/routes.dart';
 import 'package:team_apt_task/utils/config/theme.dart';
 

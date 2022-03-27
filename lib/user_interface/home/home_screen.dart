@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   int get tabIndex => _tabController.index;
 
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
 
   @override
   void initState() {

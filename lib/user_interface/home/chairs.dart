@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/data.dart';
+import '../../models/product.dart';
 import 'list_view_item.dart';
 
 class Chairs extends StatefulWidget {
@@ -16,15 +16,12 @@ class _ChairsState extends State<Chairs> {
     return ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemCount: 3,
+        itemCount: chairs.length,
         itemBuilder: (context, index) {
+          final chair = chairs[index];
+
           return ListViewItem(
-              item: Data(
-            name: 'The King\'s Chair',
-            image: 'assets/images/luxury-chair-2.jpeg',
-            items: [''],
-            isFavourite: true,
-          ));
+              product: chair);
         });
   }
 }

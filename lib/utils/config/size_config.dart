@@ -19,8 +19,8 @@ class SizeConfig {
 // Get the proportionate height as per screen size
 double getProportionateScreenHeight(double inputHeight) {
   double screenHeight = SizeConfig.screenHeight!;
-  EdgeInsets padding = SizeConfig.padding!;
-  double safeArea = padding.top + padding.bottom;
+  // EdgeInsets padding = SizeConfig.padding!;
+  // double safeArea = padding.top + padding.bottom;
 
   // figma height 812
   return (inputHeight / 812.0) * screenHeight;

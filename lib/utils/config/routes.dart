@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_apt_task/models/product.dart';
 import 'package:team_apt_task/user_interface/cart/cart_screen.dart';
 import 'package:team_apt_task/user_interface/components/navigation_builder.dart';
 import 'package:team_apt_task/user_interface/favourite/favourite_screen.dart';
@@ -6,9 +7,10 @@ import 'package:team_apt_task/user_interface/home/home_screen.dart';
 import 'package:team_apt_task/user_interface/landing/landing_screen.dart';
 import 'package:team_apt_task/user_interface/product_details/product_detail_screen.dart';
 
+
 class AppRoute {
   static Route onGenerateRoute(RouteSettings settings) {
-    final args = settings.arguments;
+    // final args = settings.arguments;
 
     switch (settings.name) {
       case landing:
@@ -17,8 +19,12 @@ class AppRoute {
       case home:
         return NavigationBuilder(child: const HomeScreen(), settings: settings);
       case details:
+        final product = settings.arguments as Product;
         return NavigationBuilder(
-            child: const ProductDetailScreen(), settings: settings);
+            child: ProductDetailScreen(
+              product: product,
+            ),
+            settings: settings);
       case favourite:
         return NavigationBuilder(
             child: const FavouriteScreen(), settings: settings);
