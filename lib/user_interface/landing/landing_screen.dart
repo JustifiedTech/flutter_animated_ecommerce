@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../utils/config/constants.dart';
@@ -6,8 +8,38 @@ import '../../utils/config/size_config.dart';
 import '../components/padded.dart';
 import '../components/space.dart';
 
-class LandingScreen extends StatelessWidget {
+class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LandingScreen> createState() => _LandingScreenState();
+}
+
+class _LandingScreenState extends State<LandingScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late AnimationController _animationController2;
+  @override
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    Timer(Duration(milliseconds: 300), () => _animationController.forward());
+    _animationController.forward();
+
+    _animationController2 = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+    Timer(Duration(milliseconds: 200), () => _animationController2.forward());
+    _animationController.forward();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _animationController2.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,44 +52,52 @@ class LandingScreen extends StatelessWidget {
             // width: double.maxFinite,
             right: 80,
             top: 233,
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: kContainerColor, shape: BoxShape.circle),
-              height: getProportionateScreenHeight(500),
-              width: getProportionateScreenWidth(500),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Align(
-                      alignment: Alignment.centerRight,
-                      child: Text.rich(
-                        TextSpan(
-                          text:
-                              'Be faithful to your own taste, because\nnothing you really like is ever out of style.',
-                          style: TextStyle(
-                            fontSize: 14,
+            child: SlideTransition(
+              // opacity: _animationController,
+              position: Tween<Offset>(begin: Offset(-1, 0), end: Offset.zero)
+                  .animate(_animationController),
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: kContainerColor, shape: BoxShape.circle),
+                height: getProportionateScreenHeight(500),
+                width: getProportionateScreenWidth(500),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Align(
+                        alignment: Alignment.centerRight,
+                        child: Text.rich(
+                          TextSpan(
+                            text:
+                                'Be faithful to your own taste, because\nnothing you really like is ever out of style.',
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const Space(
-                      height: 20,
-                    ),
-                    GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(
-                              AppRoute.home,
-                            ),
-                        child:
-                            Image.asset('assets/images/long-arrow-right.png'))
-                  ]),
+                      const Space(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                          onTap: () => Navigator.of(context).pushNamed(
+                                AppRoute.home,
+                              ),
+                          child:
+                              Image.asset('assets/images/long-arrow-right.png'))
+                    ]),
+              ),
             ),
           ),
           Positioned(
             top: 0,
             child: SafeArea(
               child: Padded(
-                child: AnimatedContainer(
-                  duration: kAnimationDuration,
+                child: SlideTransition(
+                  position:
+                      Tween<Offset>(begin: Offset(-1, 0), end: Offset.zero)
+                          .animate(_animationController2),
+                  
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

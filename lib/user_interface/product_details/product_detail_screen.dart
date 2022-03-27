@@ -8,7 +8,6 @@ import 'dart:async' show Timer;
 
 import '../../utils/config/constants.dart';
 import '../../utils/config/size_config.dart';
-import '../components/build_dot.dart';
 import '../components/button.dart';
 import '../components/default_card.dart';
 
@@ -21,29 +20,47 @@ class ProductDetailScreen extends StatefulWidget {
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  int _currentIndex = 0;
-
-  List<Color> colors = [kGreenColor, kLabelColor, kPinkColor];
-
-  final PageController _pageController =
-      PageController(initialPage: 0, keepPage: false);
+class _ProductDetailScreenState extends State<ProductDetailScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
   @override
   void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+    Timer(const Duration(milliseconds: 5000),
+        () => _animationController.forward());
+    _animationController.forward();
+
     super.initState();
   }
 
   @override
   void dispose() {
+    _animationController.dispose();
     super.dispose();
-    _pageController.dispose();
   }
+  int _currentIndex = 0;
 
-  void _onPageChanged(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+  List<Color> colors = [kGreenColor, kLabelColor, kPinkColor];
+
+  // final PageController _pageController =
+  //     PageController(initialPage: 0, keepPage: false);
+  // // @override
+  // // void initState() {
+  // //   super.initState();
+  // // }
+
+  // // @override
+  // // void dispose() {
+  // //   super.dispose();
+  // //   _pageController.dispose();
+  // // }
+
+  // // void _onPageChanged(int index) {
+  // //   setState(() {
+  // //     _currentIndex = index;
+  // //   });
+  // // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,34 +77,38 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: SizedBox(
-                height: getProportionateScreenHeight(300),
-                // width: getProportionateScreenWidth(300),
-                child:
-                    // PageView.builder(
-                    ListView.builder(
-                  // allowImplicitScrolling: true,
-                  controller: _pageController,
-                  // onPageChanged: _onPageChanged,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: widget.product.items.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      padding: EdgeInsets.zero,
-                      margin: const EdgeInsets.only(right: 10),
-                      width: getProportionateScreenWidth(200),
-                      height: getProportionateScreenHeight(250),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(
-                          widget.product.items[index],
-                          fit: BoxFit.cover,
+            SlideTransition(
+              position: Tween<Offset>(begin: Offset(1, 0), end: Offset.zero)
+                  .animate(_animationController),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: SizedBox(
+                  height: getProportionateScreenHeight(300),
+                  // width: getProportionateScreenWidth(300),
+                  child:
+                      // PageView.builder(
+                      ListView.builder(
+                    // allowImplicitScrolling: true,
+                    // controller: _pageController,
+                    // onPageChanged: _onPageChanged,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: widget.product.items.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.zero,
+                        margin: const EdgeInsets.only(right: 10),
+                        width: getProportionateScreenWidth(200),
+                        height: getProportionateScreenHeight(250),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            widget.product.items[index],
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
