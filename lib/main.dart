@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_apt_task/utils/config/routes.dart';
+import 'package:team_apt_task/utils/config/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +22,8 @@ class TeamApt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'RentSmallSmall',
-      theme: ThemeData(),
+      title: 'TeamApt',
+      theme: Themes.themeData(),
       // home: const Welcome(),
       initialRoute: AppRoute.landing,
       onGenerateRoute: AppRoute.onGenerateRoute,
