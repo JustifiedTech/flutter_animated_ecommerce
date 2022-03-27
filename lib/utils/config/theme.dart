@@ -30,18 +30,18 @@ class Themes {
 
   static InputDecorationTheme inputDecorationTheme() {
     OutlineInputBorder outlineInputBorder = const OutlineInputBorder(
-        borderSide: BorderSide(width: 0.8, color: kGreyColor),
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
         gapPadding: 5);
     OutlineInputBorder errorInputBorder = const OutlineInputBorder(
-        gapPadding: 5,
+        // gapPadding: 5,
         borderSide: BorderSide(
           color: Colors.red,
-          width: 0.8,
+          width: 0.5,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(8)));
+        borderRadius: BorderRadius.all(Radius.circular(15)));
     return InputDecorationTheme(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,
       border: outlineInputBorder,

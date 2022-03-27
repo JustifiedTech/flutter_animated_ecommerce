@@ -10,6 +10,7 @@ class DefaultCard extends StatelessWidget {
       required this.width,
       required this.child,
       this.color = kWhiteColor,
+      this.gradient,
       this.radius = 8})
       : super(key: key);
   final double height;
@@ -17,6 +18,7 @@ class DefaultCard extends StatelessWidget {
   final Widget child;
   final double radius;
   final Color color;
+  final Gradient? gradient;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,9 @@ class DefaultCard extends StatelessWidget {
       height: getProportionateScreenHeight(height),
       width: getProportionateScreenWidth(width),
       decoration: BoxDecoration(
-          color: color, borderRadius: BorderRadius.circular(radius)),
+          gradient: gradient,
+          color: color,
+          borderRadius: BorderRadius.circular(radius)),
       child: Center(child: child),
     );
   }
