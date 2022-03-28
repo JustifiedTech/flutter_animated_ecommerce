@@ -21,15 +21,17 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
+  int selectedColor = 0;
+  int counter = 0;
   late AnimationController _animationController;
   @override
   void initState() {
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1000));
-    Timer(const Duration(milliseconds: 5000),
+    Timer(const Duration(milliseconds: 500),
         () => _animationController.forward());
-    _animationController.forward();
+    // _animationController.forward();
 
     super.initState();
   }
@@ -39,28 +41,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
     _animationController.dispose();
     super.dispose();
   }
-  int _currentIndex = 0;
 
-  List<Color> colors = [kGreenColor, kLabelColor, kPinkColor];
-
-  // final PageController _pageController =
-  //     PageController(initialPage: 0, keepPage: false);
-  // // @override
-  // // void initState() {
-  // //   super.initState();
-  // // }
-
-  // // @override
-  // // void dispose() {
-  // //   super.dispose();
-  // //   _pageController.dispose();
-  // // }
-
-  // // void _onPageChanged(int index) {
-  // //   setState(() {
-  // //     _currentIndex = index;
-  // //   });
-  // // }
+  List<Color> colors = [kGreenColor, kGreyColor, kPinkColor];
 
   @override
   Widget build(BuildContext context) {
@@ -78,19 +60,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SlideTransition(
-              position: Tween<Offset>(begin: Offset(1, 0), end: Offset.zero)
-                  .animate(_animationController),
+              position:
+                  Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero)
+                      .animate(CurvedAnimation(
+                          parent: _animationController,
+                          curve: Curves.bounceInOut)),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: SizedBox(
                   height: getProportionateScreenHeight(300),
-                  // width: getProportionateScreenWidth(300),
-                  child:
-                      // PageView.builder(
-                      ListView.builder(
-                    // allowImplicitScrolling: true,
-                    // controller: _pageController,
-                    // onPageChanged: _onPageChanged,
+                  child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: widget.product.items.length,
                     itemBuilder: (context, index) {
@@ -143,10 +122,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
               ],
             ),
             const Space(height: 10),
-            const Text.rich(
-              TextSpan(
-                  text:
-                      'ORB is a set of seven metal candle holders stacked on top of one another to form a modern spherical sculpture. Designed to be functional.'),
+            Text.rich(
+              TextSpan(text: widget.product.description),
             ),
             const Space(
               height: 30,
@@ -157,27 +134,47 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                 Row(
                   children: List.generate(
                     3,
-                    (index) => Container(
-                      margin: const EdgeInsets.only(right: 5),
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: colors[index],
+                    (index) => InkWell(
+                      onTap: () => setState(() {
+                        selectedColor = index;
+                      }),
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 5),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: index == selectedColor
+                              ? Border.all(width: 5, color: kLabelColor)
+                              : null,
+                          color: colors[index],
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Row(
                   children: [
-                    CircleButton(onTap: () {}, icon: Icons.remove),
-                    const DefaultCard(
+                    CircleButton(
+                        onTap: () {
+                          if (counter > 0) {
+                            setState(() {
+                              counter -= 1;
+                            });
+                          }
+                        },
+                        icon: Icons.remove),
+                    DefaultCard(
                         radius: 10,
                         color: kGreyColor,
                         width: 50,
                         height: 30,
-                        child: Text('88')),
-                    CircleButton(onTap: () {}, icon: Icons.add),
+                        child: Text('$counter')),
+                    CircleButton(
+                        onTap: () => setState(() {
+                              counter += 1;
+                            }),
+                        icon: Icons.add),
                   ],
                 ),
               ],
@@ -201,24 +198,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen>
                       icon: Icons.favorite_outline,
                       onTap: () {},
                     ),
-                    // DefaultCard(
-                    //   color: kBlackColor,
-                    //   radius: 20,
-                    //   height: 60,
-                    //   width: 250,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(left: 20.0, right: 10),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: const [
-                    //         Text('Add to cart', style: TextStyle(color: kWhiteColor)),
-                    //         CircleButton(
-                    //           icon: Icons.add_shopping_cart,
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // )
                   ]),
             )
           ],

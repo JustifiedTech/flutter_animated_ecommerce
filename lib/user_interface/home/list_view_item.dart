@@ -33,10 +33,10 @@ class ListViewItem extends StatelessWidget {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
+            Positioned(
+              bottom: getProportionateScreenHeight(80),
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 30),
+                margin: const EdgeInsets.symmetric(vertical: 0),
                 padding: const EdgeInsets.only(left: 10),
                 width: getProportionateScreenWidth(230),
                 child: Row(

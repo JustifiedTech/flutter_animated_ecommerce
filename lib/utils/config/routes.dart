@@ -21,6 +21,8 @@ class AppRoute {
       case details:
         final product = settings.arguments as Product;
         return NavigationBuilder(
+            isScale: false,
+            direction: AxisDirection.up,
             child: ProductDetailScreen(
               product: product,
             ),

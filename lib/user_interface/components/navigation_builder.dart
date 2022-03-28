@@ -9,8 +9,8 @@ class NavigationBuilder extends PageRouteBuilder {
       : super(
           // transitionsBuilder: ,
           settings: settings,
-          reverseTransitionDuration: const Duration(seconds: 1),
-          transitionDuration: const Duration(seconds: 1),
+          reverseTransitionDuration: const Duration(milliseconds: 500),
+          transitionDuration: const Duration(microseconds: 500),
           pageBuilder: (context, animation, secondaryAnimation) => child,
         );
   final Widget child;

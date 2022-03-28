@@ -6,11 +6,16 @@ import '../../utils/config/enums.dart';
 import '../../utils/config/size_config.dart';
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({Key? key, required this.selectedMenu, this.padding = 10})
+  const BottomNavBar(
+      {Key? key,
+      required this.selectedMenu,
+      this.padding = 10,
+      required this.controller})
       : super(key: key);
 
   final MenuState selectedMenu;
   final double padding;
+  final Animation<Offset> controller;
 
   @override
   Widget build(BuildContext context) {
@@ -22,29 +27,31 @@ class BottomNavBar extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
-      child: SafeArea(
-          top: false,
-          child: Container(
-            height: getProportionateScreenHeight(65),
-            padding: EdgeInsets.zero,
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: const BoxDecoration(
-              color: kDarkColor,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: navs
-                    .asMap()
-                    .entries
-                    .map((nav) => BottomNav(
-                        selectedMenu: selectedMenu,
-                        selected: nav.value['selected'],
-                        icon: nav.value['icon'],
-                        goto: nav.value['goto']))
-                    .toList()
-            ),
-          )),
+      child: SlideTransition(
+        position: controller,
+        child: SafeArea(
+            top: false,
+            child: Container(
+              height: getProportionateScreenHeight(65),
+              padding: EdgeInsets.zero,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: const BoxDecoration(
+                color: kDarkColor,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: navs
+                      .asMap()
+                      .entries
+                      .map((nav) => BottomNav(
+                          selectedMenu: selectedMenu,
+                          selected: nav.value['selected'],
+                          icon: nav.value['icon'],
+                          goto: nav.value['goto']))
+                      .toList()),
+            )),
+      ),
     );
   }
 }

@@ -23,13 +23,13 @@ class _LandingScreenState extends State<LandingScreen>
   void initState() {
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
-    Timer(Duration(milliseconds: 300), () => _animationController.forward());
-    _animationController.forward();
+    Timer(const Duration(milliseconds: 300),
+        () => _animationController.forward());
 
     _animationController2 = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    Timer(Duration(milliseconds: 200), () => _animationController2.forward());
-    _animationController.forward();
+    Timer(const Duration(milliseconds: 200),
+        () => _animationController2.forward());
 
     super.initState();
   }
@@ -54,7 +54,8 @@ class _LandingScreenState extends State<LandingScreen>
             top: 233,
             child: SlideTransition(
               // opacity: _animationController,
-              position: Tween<Offset>(begin: Offset(-1, 0), end: Offset.zero)
+              position:
+                  Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero)
                   .animate(_animationController),
               child: Container(
                 decoration: const BoxDecoration(
@@ -95,7 +96,8 @@ class _LandingScreenState extends State<LandingScreen>
               child: Padded(
                 child: SlideTransition(
                   position:
-                      Tween<Offset>(begin: Offset(-1, 0), end: Offset.zero)
+                      Tween<Offset>(
+                          begin: const Offset(-1, 0), end: Offset.zero)
                           .animate(_animationController2),
                   
                   child: Column(
