@@ -53,40 +53,46 @@ class _LandingScreenState extends State<LandingScreen>
             right: 80,
             top: 233,
             child: SlideTransition(
-              // opacity: _animationController,
+              // opacity: _animationController,/
               position:
                   Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero)
                   .animate(_animationController),
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: kContainerColor, shape: BoxShape.circle),
-                height: getProportionateScreenHeight(500),
-                width: getProportionateScreenWidth(500),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Align(
-                        alignment: Alignment.centerRight,
-                        child: Text.rich(
-                          TextSpan(
-                            text:
-                                'Be faithful to your own taste, because\nnothing you really like is ever out of style.',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Space(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                          onTap: () => Navigator.of(context).pushNamed(
-                                AppRoute.home,
+              child: TweenAnimationBuilder(
+                  tween: Tween<double>(begin: 500, end: 10000),
+                  duration: const Duration(seconds: 1),
+                  builder: (BuildContext context, double value, Widget? child) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                          color: kContainerColor, shape: BoxShape.circle),
+                      height: getProportionateScreenHeight(500),
+                      width: getProportionateScreenWidth(500),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Align(
+                              alignment: Alignment.centerRight,
+                              child: Text.rich(
+                                TextSpan(
+                                  text:
+                                      'Be faithful to your own taste, because\nnothing you really like is ever out of style.',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
                               ),
-                          child:
-                              Image.asset('assets/images/long-arrow-right.png'))
-                    ]),
+                            ),
+                            const Space(
+                              height: 20,
+                            ),
+                            GestureDetector(
+                                onTap: () => Navigator.of(context).pushNamed(
+                                      AppRoute.home,
+                                    ),
+                                child: Image.asset(
+                                    'assets/images/long-arrow-right.png'))
+                          ]),
+                    );
+                  }
               ),
             ),
           ),
